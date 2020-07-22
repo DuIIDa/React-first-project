@@ -2,7 +2,9 @@ import React from 'react';
 
 function App() {
   return (
-    <div></div>
+    <div className = "wrapper">
+      <h1 className = "title">ToDo List</h1>
+    </div>
   );
 }
 
