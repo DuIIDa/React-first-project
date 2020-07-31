@@ -4,8 +4,20 @@ import './Modal.css'
 
 //Создаем класс Modal и наследуем его от React.Componenta
 export default class Modal extends React.Component {
-    state = {
-        isOpen: false,
+    constructor(props) {
+        super(props);
+        this.state = {
+            isOpen: false,
+        }
+        // Эта привязка обязательна для работы `this` в колбэке.
+        this.handleClick = this.handleClick.bind(this);
+    }
+
+    handleClick(event) {
+        if(event.target.classList.contains('modal') || 
+        event.target.classList.contains('buttonOpenModel') ||
+        event.target.classList.contains('buttonCloseModel') )
+        this.setState({isOpen: !this.state.isOpen})
     }
     
     render() {
@@ -14,15 +26,14 @@ export default class Modal extends React.Component {
 
             {/*Используется для отмены добавления React-oм корневого элемента*/},
             <React.Fragment>
-                <button onClick={() => this.setState({isOpen: true})}>Open Modal</button>
-
+                <button className='buttonOpenModel' onClick={this.handleClick}>Open Modal</button>
                 {
                 this.state.isOpen && 
-                    (<div className="modal" onClick={(event) => event.target.classList.contains('modal') ? this.setState({isOpen: false}): null}>
+                    (<div className="modal" onClick={this.handleClick}>
                         <div className="modal-body">
                             <h1>Modal-Title</h1>
                             <p>Info Modal</p>
-                            <button onClick={() => this.setState({isOpen: false})}>Close Modal</button>
+                            <button className='buttonCloseModel' onClick={this.handleClick}>Close Modal</button>
                         </div>
                     </div>)
                 }
